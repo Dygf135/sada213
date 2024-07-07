@@ -19,7 +19,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y xvfb ffmpeg
-          pip install selenium_recaptcha_solver undetected-chromedriver webdriver-manager
+          pip install selenium_recaptcha_solver undetected-chromedriver
 
       - name: Run Recaptcha Solver script
         run: xvfb-run python recaptcha_solver.py
@@ -30,12 +30,13 @@ jobs:
           name: screenshots
           path: |
             screenshot.png
+            nowsecure_screenshot.png
             error_screenshot.png
 
       - name: Commit and Push Results
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add screenshot.png error_screenshot.png
-          git commit -m "Add Recaptcha Solver screenshots" || echo "No changes to commit"
+          git add screenshot.png nowsecure_screenshot.png error_screenshot.png
+          git commit -m "Add screenshots from Recaptcha Solver and nowsecure.nl" || echo "No changes to commit"
           git push
