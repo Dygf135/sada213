@@ -1,7 +1,4 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.options import Options
+import undetected_chromedriver as uc
 from selenium_recaptcha_solver import RecaptchaSolver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -9,16 +6,15 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 
 # Set up Chrome options
-options = Options()
+options = uc.ChromeOptions()
 options.add_argument("--headless")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-gpu")
 options.add_argument("--window-size=1920,1080")
 options.add_argument("--disable-extensions")
 
-# Initialize the Chrome WebDriver with the correct version
-service = Service(ChromeDriverManager().install())
-driver = webdriver.Chrome(service=service, options=options)
+# Initialize the Undetected Chromedriver
+driver = uc.Chrome(options=options)
 
 try:
     # Initialize the RecaptchaSolver
@@ -28,13 +24,17 @@ try:
     driver.get('https://www.google.com/recaptcha/api2/demo')
     
     # Wait for the reCAPTCHA iframe to be present
-    wait = WebDriverWait(driver, 10)
-    recaptcha_iframe = wait.until(EC.presence_of_element_located((By.XPATH, '//iframe[@title="reCAPTCHA"]')))
+    WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, '//iframe[@title="reCAPTCHA"]'))
+    )
+    
+    # Find the reCAPTCHA iframe
+    recaptcha_iframe = driver.find_element(By.XPATH, '//iframe[@title="reCAPTCHA"]')
     
     # Click the reCAPTCHA checkbox
     solver.click_recaptcha_v2(iframe=recaptcha_iframe)
     
-    # Wait a bit to ensure the reCAPTCHA is solved
+    # Wait a bit to ensure the reCAPTCHA is fully solved
     time.sleep(5)
     
     # Take a screenshot after solving reCAPTCHA
@@ -43,6 +43,8 @@ try:
     
 except Exception as e:
     print(f"An error occurred: {str(e)}")
+    driver.save_screenshot('error_screenshot.png')
+    print("Error screenshot saved as 'error_screenshot.png'")
     
 finally:
     # Clean up
