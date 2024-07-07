@@ -17,8 +17,10 @@ def get_chrome_version():
 print(f"Installed Chrome version: {get_chrome_version()}")
 print(f"Undetected ChromeDriver version: {uc.__version__}")
 
-# Set up Chrome options
+# Set up Chrome options with custom user agent
+agent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"
 options = uc.ChromeOptions()
+options.add_argument(f"user-agent={agent}")
 options.add_argument("--headless")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-gpu")
