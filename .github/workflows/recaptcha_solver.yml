@@ -15,6 +15,13 @@ jobs:
         with:
           python-version: '3.9'
 
+      - name: Remove existing ChromeDriver
+        run: |
+          sudo apt-get remove google-chrome-stable
+          sudo apt-get remove chromium-browser
+          sudo rm -rf /usr/local/bin/chromedriver
+          sudo rm -rf /usr/bin/chromedriver
+
       - name: Install dependencies
         run: |
           sudo apt-get update
