@@ -1,7 +1,4 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.options import Options
+import undetected_chromedriver as uc
 from selenium_recaptcha_solver import RecaptchaSolver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -9,15 +6,15 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 
 # Set up Chrome options
-options = Options()
+options = uc.ChromeOptions()
 options.add_argument("--headless")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-gpu")
 options.add_argument("--window-size=1920,1080")
 options.add_argument("--disable-extensions")
 
-# Initialize the Chrome driver with webdriver_manager
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+# Initialize the Undetected Chromedriver
+driver = uc.Chrome(options=options)
 
 try:
     # Initialize the RecaptchaSolver
