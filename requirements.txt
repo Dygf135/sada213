@@ -1,3 +1,2 @@
 selenium_recaptcha_solver
-selenium
-webdriver_manager
+undetected-chromedriver
