@@ -15,41 +15,25 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: Remove existing Chrome and ChromeDriver
-        run: |
-          sudo apt-get purge google-chrome-stable
-          sudo apt-get purge chromium-browser
-          sudo rm -rf /usr/local/bin/chromedriver
-          sudo rm -rf /usr/bin/chromedriver
-
-      - name: Install specific Chrome version
-        run: |
-          wget https://mirror.cs.uchicago.edu/google-chrome/pool/main/g/google-chrome-stable/google-chrome-stable_114.0.5735.198-1_amd64.deb
-          sudo dpkg -i google-chrome-stable_114.0.5735.198-1_amd64.deb
-          sudo apt-get install -f
-
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y xvfb ffmpeg
-          pip install selenium_recaptcha_solver undetected-chromedriver==3.4.6
+          sudo apt-get install -y xvfb
+          pip install -r requirements.txt
 
       - name: Run Recaptcha Solver script
         run: xvfb-run python recaptcha_solver.py
 
-      - name: Upload screenshots
+      - name: Upload screenshot
         uses: actions/upload-artifact@v3
         with:
-          name: screenshots
-          path: |
-            screenshot.png
-            nowsecure_screenshot.png
-            error_screenshot.png
+          name: screenshot
+          path: screenshot.png
 
       - name: Commit and Push Results
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add screenshot.png nowsecure_screenshot.png error_screenshot.png
-          git commit -m "Add screenshots from Recaptcha Solver and nowsecure.nl" || echo "No changes to commit"
+          git add screenshot.png
+          git commit -m "Add Recaptcha Solver screenshot" || echo "No changes to commit"
           git push
