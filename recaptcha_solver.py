@@ -3,7 +3,6 @@ from selenium_recaptcha_solver import RecaptchaSolver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.chrome import ChromeDriverManager
 import time
 
 # Set up Chrome options
@@ -14,8 +13,8 @@ options.add_argument("--disable-gpu")
 options.add_argument("--window-size=1920,1080")
 options.add_argument("--disable-extensions")
 
-# Initialize the Undetected Chromedriver with ChromeDriverManager
-driver = uc.Chrome(driver_executable_path=ChromeDriverManager().install(), options=options)
+# Initialize the Undetected Chromedriver
+driver = uc.Chrome(options=options)
 
 try:
     # Initialize the RecaptchaSolver
@@ -42,7 +41,7 @@ try:
     driver.save_screenshot('screenshot.png')
     print("Screenshot saved as 'screenshot.png'")
     
-    # Example of accessing another site (as in your example)
+    # Example of accessing another site
     driver.get("https://nowsecure.nl/")
     time.sleep(4)
     driver.save_screenshot('nowsecure_screenshot.png')
