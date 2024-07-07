@@ -1,6 +1,2 @@
-selenium==4.9.1
-selenium-recaptcha-solver==1.9.0
-webdriver-manager==3.8.6
-pydub==0.25.1
-SpeechRecognition==3.10.0
-requests==2.31.0
+selenium_recaptcha_solver
+undetected-chromedriver
