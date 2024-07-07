@@ -19,7 +19,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y xvfb ffmpeg
-          pip install selenium selenium_recaptcha_solver webdriver_manager
+          pip install selenium_recaptcha_solver undetected-chromedriver==3.4.6
 
       - name: Run Recaptcha Solver script
         run: xvfb-run python recaptcha_solver.py
