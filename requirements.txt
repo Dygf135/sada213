@@ -1,2 +1,4 @@
 selenium_recaptcha_solver
-undetected-chromedriver
+selenium
+chromedriver_autoinstaller
+pyvirtualdisplay
